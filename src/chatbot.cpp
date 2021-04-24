@@ -42,6 +42,12 @@ ChatBot::~ChatBot() {
 
 //// STUDENT CODE
 ////
+ChatBot::ChatBot(const ChatBot &other)
+    : _image(std::make_unique<wxBitmap>(*other._image)) {
+  _currentNode = other._currentNode;
+  _rootNode = other._currentNode;
+  _chatLogic = other._chatLogic;
+}
 
 ////
 //// EOF STUDENT CODE
