@@ -113,9 +113,6 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
   // allow for PNG images to be handled
   wxInitAllImageHandlers();
 
-  //// STUDENT CODE
-  ////
-
   // create chat logic instance
   // _chatLogic = new ChatLogic();
   // _chatLogic = std::make_unique<ChatLogic>();
@@ -130,26 +127,15 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
   //// EOF STUDENT CODE
 }
 
-ChatBotPanelDialog::~ChatBotPanelDialog() {
-  //// STUDENT CODE
-  ////
-
-  //   delete _chatLogic;
-
-  ////
-  //// EOF STUDENT CODE
-}
+ChatBotPanelDialog::~ChatBotPanelDialog() {}
 
 void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser) {
   // add a single dialog element to the sizer
-  std::cout << "Before new.\n";
   ChatBotPanelDialogItem *item =
       new ChatBotPanelDialogItem(this, text, isFromUser);
-  std::cout << "After new.\n";
   _dialogSizer->Add(
       item, 0, wxALL | (isFromUser == true ? wxALIGN_LEFT : wxALIGN_RIGHT), 8);
   _dialogSizer->Layout();
-  std::cout << "After add.\n";
 
   // make scrollbar show up
   this->FitInside(); // ask the sizer about the needed size
@@ -165,14 +151,12 @@ void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser) {
 
 void ChatBotPanelDialog::PrintChatbotResponse(std::string response) {
   // convert string into wxString and add dialog element
-  std::cout << "Before bot text.\n";
   wxString botText(response.c_str(), wxConvUTF8);
-  std::cout << "After bot text.\n";
   AddDialogItem(botText, false);
-  std::cout << "Ater add dialog.\n";
 }
 
 void ChatBotPanelDialog::paintEvent(wxPaintEvent &evt) {
+  // void ChatBotPanelDialog::paintEvent() {
   wxPaintDC dc(this);
   render(dc);
 }
@@ -198,26 +182,22 @@ ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text,
                                                bool isFromUser)
     : wxPanel(parent, -1, wxPoint(-1, -1), wxSize(-1, -1), wxBORDER_NONE) {
   // retrieve image from chatbot
-  std::cout << "before bitmap.\n";
   wxBitmap *bitmap = isFromUser == true ? nullptr
                                         : ((ChatBotPanelDialog *)parent)
                                               ->GetChatLogicHandle()
                                               ->GetImageFromChatbot();
 
   // create image and text
-  std::cout << "before creat image.\n";
   _chatBotImg = new wxStaticBitmap(
       this, wxID_ANY,
       (isFromUser ? wxBitmap(imgBasePath + "user.png", wxBITMAP_TYPE_PNG)
                   : *bitmap),
       wxPoint(-1, -1), wxSize(-1, -1));
-  std::cout << "after new.\n";
   _chatBotTxt =
       new wxStaticText(this, wxID_ANY, text, wxPoint(-1, -1), wxSize(150, -1),
                        wxALIGN_CENTRE | wxBORDER_NONE);
   _chatBotTxt->SetForegroundColour(isFromUser == true ? wxColor(*wxBLACK)
                                                       : wxColor(*wxWHITE));
-  std::cout << "before create sizer.\n";
   // create sizer and add elements
   wxBoxSizer *horzBoxSizer = new wxBoxSizer(wxHORIZONTAL);
   horzBoxSizer->Add(_chatBotTxt, 8, wxEXPAND | wxALL, 1);

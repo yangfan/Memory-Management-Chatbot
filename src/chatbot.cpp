@@ -17,18 +17,6 @@ ChatBot::ChatBot() {
 }
 
 // constructor WITH memory allocation
-// ChatBot::ChatBot(std::string filename)
-//     : _image(new wxBitmap(filename, wxBITMAP_TYPE_PNG)) {
-//   std::cout << "ChatBot Constructor" << std::endl;
-
-//   // invalidate data handles
-//   _chatLogic = nullptr;
-//   _rootNode = nullptr;
-
-//   // load image into heap memory
-//   //   _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
-// }
-// constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
     : _image(std::make_unique<wxBitmap>(filename, wxBITMAP_TYPE_PNG)) {
   std::cout << "ChatBot Constructor" << std::endl;
@@ -38,19 +26,7 @@ ChatBot::ChatBot(std::string filename)
   _rootNode = nullptr;
 }
 
-ChatBot::~ChatBot() {
-  std::cout << "ChatBot Destructor" << std::endl;
-
-  // deallocate heap memory
-  // if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
-  // {
-  //   delete _image;
-  //   _image = NULL;
-  // }
-}
-
-//// STUDENT CODE
-////
+ChatBot::~ChatBot() { std::cout << "ChatBot Destructor" << std::endl; }
 
 ChatBot::ChatBot(const ChatBot &other)
     : _image(std::make_unique<wxBitmap>(*other._image)),
@@ -58,14 +34,8 @@ ChatBot::ChatBot(const ChatBot &other)
       _chatLogic(other._chatLogic) {
   std::cout << "ChatBot copy constructor.\n";
 }
-// ChatBot::ChatBot(const ChatBot &other)
-//     : _rootNode(other._rootNode), _chatLogic(other._chatLogic) {
-//   _image = new wxBitmap(*other._image);
-//   std::cout << "ChatBot copy constructor.\n";
-// }
 
 ChatBot &ChatBot::operator=(const ChatBot &other) {
-  std::cout << "Start copy assignment operator.\n";
   if (&other != this) {
     _image = std::make_unique<wxBitmap>(*other._image);
     _currentNode = other._currentNode;
@@ -75,17 +45,6 @@ ChatBot &ChatBot::operator=(const ChatBot &other) {
   std::cout << "ChatBot copy assignment operator.\n";
   return *this;
 }
-// ChatBot &ChatBot::operator=(const ChatBot &other) {
-//   std::cout << "Start copy assignment operator.\n";
-//   if (&other != this) {
-//     delete _image;
-//     _image = new wxBitmap(*other._image);
-//     _rootNode = other._rootNode;
-//     _chatLogic = other._chatLogic;
-//   }
-//   std::cout << "ChatBot copy assignment operator.\n";
-//   return *this;
-// }
 
 ChatBot::ChatBot(ChatBot &&other)
     : _image(std::move(other._image)), _currentNode(other._currentNode),
@@ -93,61 +52,29 @@ ChatBot::ChatBot(ChatBot &&other)
   other._rootNode = nullptr;
   other._currentNode = nullptr;
   other._chatLogic = nullptr;
-  // other._image = nullptr;
   std::cout << "ChatBot move constructor.\n";
 }
-// ChatBot::ChatBot(ChatBot &&other)
-//     : _rootNode(other._currentNode), _chatLogic(other._chatLogic) {
-//   _image = other._image;
-//   other._image = nullptr;
-//   other._rootNode = nullptr;
-//   other._chatLogic = nullptr;
-//   std::cout << "ChatBot move constructor.\n";
-// }
 
 ChatBot &ChatBot::operator=(ChatBot &&other) {
-  std::cout << "Start move assignment operator.\n";
   if (&other != this) {
-    std::cout << "test 1.\n";
     _image = std::move(other._image);
-    std::cout << "test 2.\n";
     _currentNode = other._currentNode;
-    std::cout << "test 3.\n";
     other._currentNode = nullptr;
     _rootNode = other._rootNode;
-    std::cout << "test 4.\n";
     other._rootNode = nullptr;
     _chatLogic = other._chatLogic;
-    std::cout << "test 5.\n";
     other._chatLogic = nullptr;
     std::cout << "ChatBot move assignment operator.\n";
   }
   return *this;
 }
-// ChatBot &ChatBot::operator=(ChatBot &&other) {
-//   std::cout << "Start move assignment operator.\n";
-//   if (&other != this) {
-//     delete _image;
-//     _image = other._image;
-//     other._image = nullptr;
-//     _rootNode = other._rootNode;
-//     other._rootNode = nullptr;
-//     _chatLogic = other._chatLogic;
-//     other._chatLogic = nullptr;
-//     std::cout << "ChatBot move assignment operator.\n";
-//   }
-//   return *this;
-// }
-
-////
-//// EOF STUDENT CODE
 
 void ChatBot::ReceiveMessageFromUser(std::string message) {
   // loop over all edges and keywords and compute Levenshtein distance to query
   typedef std::pair<GraphEdge *, int> EdgeDist;
   std::vector<EdgeDist> levDists; // format is <ptr,levDist>
 
-  for (size_t i = 0; i < _currentNode->GetNumberOfChildEdges(); ++i) {
+  for (int i = 0; i < _currentNode->GetNumberOfChildEdges(); ++i) {
     GraphEdge *edge = _currentNode->GetChildEdgeAtIndex(i);
     for (auto keyword : edge->GetKeywords()) {
       EdgeDist ed{edge, ComputeLevenshteinDistance(keyword, message)};

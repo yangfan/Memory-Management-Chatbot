@@ -13,13 +13,7 @@ private:
   wxBoxSizer *_dialogSizer;
   wxBitmap _image;
 
-  //// STUDENT CODE
-  ////
-
   std::unique_ptr<ChatLogic> _chatLogic;
-
-  ////
-  //// EOF STUDENT CODE
 
 public:
   // constructor / destructor
@@ -31,6 +25,7 @@ public:
 
   // events
   void paintEvent(wxPaintEvent &evt);
+  // void paintEvent();
   void paintNow();
   void render(wxDC &dc);
 

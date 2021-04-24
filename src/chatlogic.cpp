@@ -11,46 +11,9 @@
 #include "graphedge.h"
 #include "graphnode.h"
 
-ChatLogic::ChatLogic() {
-  //// STUDENT CODE
-  ////
+ChatLogic::ChatLogic() { _chatBot = nullptr; }
 
-  // create instance of chatbot
-  // _chatBot = std::make_unique<ChatBot>("../images/chatbot.png");
-  _chatBot = nullptr;
-  // add pointer to chatlogic so that chatbot answers can be passed on to the
-  // GUI
-  // _chatBot->SetChatLogicHandle(this);
-
-  ////
-  //// EOF STUDENT CODE
-}
-
-ChatLogic::~ChatLogic() {
-  //// STUDENT CODE
-  ////
-
-  // delete chatbot instance
-  // if (_chatBot != nullptr) {
-  //   std::cout << "Delete _chatbot.\n";
-  //   delete _chatBot;
-  //   std::cout << "After delete.\n";
-  // }
-
-  // delete all nodes
-  // for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
-  // {
-  //     delete *it;
-  // }
-
-  // delete all edges
-  // for (auto it = std::begin(_edges); it != std::end(_edges); ++it) {
-  //   delete *it;
-  // }
-
-  ////
-  //// EOF STUDENT CODE
-}
+ChatLogic::~ChatLogic() {}
 
 template <typename T>
 void ChatLogic::AddAllTokensToElement(std::string tokenID, tokenlist &tokens,
@@ -94,7 +57,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename) {
             lineStr.substr(posTokenFront + 1, posTokenBack - 1);
 
         // extract token type and info
-        int posTokenInfo = tokenStr.find(":");
+        size_t posTokenInfo = tokenStr.find(":");
         if (posTokenInfo != std::string::npos) {
           std::string tokenType = tokenStr.substr(0, posTokenInfo);
           std::string tokenInfo =
@@ -211,9 +174,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename) {
     return;
   }
 
-  //// STUDENT CODE
-  ////
-
   // identify root node
   GraphNode *rootNode = nullptr;
   for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it) {
@@ -229,17 +189,11 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename) {
   }
 
   // add chatbot to graph root node
-  // _chatBot->SetRootNode(rootNode);
-  // rootNode->MoveChatbotHere(_chatBot);
-  // ChatBot chatBot(*_chatBot);
   ChatBot chatBot("../images/chatbot.png");
   SetChatbotHandle(&chatBot);
   chatBot.SetChatLogicHandle(this);
   chatBot.SetRootNode(rootNode);
   rootNode->MoveChatbotHere(std::move(chatBot));
-
-  ////
-  //// EOF STUDENT CODE
 }
 
 void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog) {
