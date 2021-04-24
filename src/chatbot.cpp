@@ -108,12 +108,17 @@ ChatBot::ChatBot(ChatBot &&other)
 ChatBot &ChatBot::operator=(ChatBot &&other) {
   std::cout << "Start move assignment operator.\n";
   if (&other != this) {
+    std::cout << "test 1.\n";
     _image = std::move(other._image);
+    std::cout << "test 2.\n";
     _currentNode = other._currentNode;
+    std::cout << "test 3.\n";
     other._currentNode = nullptr;
     _rootNode = other._rootNode;
+    std::cout << "test 4.\n";
     other._rootNode = nullptr;
     _chatLogic = other._chatLogic;
+    std::cout << "test 5.\n";
     other._chatLogic = nullptr;
     std::cout << "ChatBot move assignment operator.\n";
   }
