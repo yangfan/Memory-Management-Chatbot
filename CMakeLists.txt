@@ -10,8 +10,12 @@ project(Membot)
 
 find_package(wxWidgets REQUIRED COMPONENTS core base)
 include(${wxWidgets_USE_FILE})
+include_directories(include/)
 
 file(GLOB project_SRCS src/*.cpp)
+set(RESULTS_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/results)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${RESULTS_OUTPUT_DIRECTORY})
+file(MAKE_DIRECTORY ${RESULTS_OUTPUT_DIRECTORY})
 
 add_executable(membot ${project_SRCS})
 target_link_libraries(membot ${wxWidgets_LIBRARIES})
