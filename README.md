@@ -1,4 +1,4 @@
-# CPPND: Memory Management Chatbot
+# Memory Management Chatbot
 
 This project creates a simple ChatBot using C++. The ChatBot (or MemBot) will introduce some basic concepts about the memory management in C++. The ChatBot will provide you the information based on the topic you type in, e.g., pointers.
 
