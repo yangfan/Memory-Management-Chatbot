@@ -6,7 +6,7 @@ Text file [`answergraph.txt`](src/answergraph.txt) defines a knowledge graph, wh
 
 ![GitHub](images/membot_demo.gif)
 
-## Dependencies for Running Locally
+## Dependencies 
 * cmake >= 3.11
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
 * make >= 4.1 (Linux, Mac), 3.81 (Windows)
