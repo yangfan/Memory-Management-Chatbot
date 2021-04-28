@@ -29,12 +29,6 @@ Text file [`answergraph.txt`](src/answergraph.txt) defines a knowledge graph, wh
 3. Compile: `cmake .. && make`
 4. Run it: `./membot`.
 
-## Project Task Details
-
-Currently, the program crashes when you close the window. There is a small bug hidden somewhere, which has something to do with improper memory management. So your first warm-up task will be to find this bug and remove it. This should familiarize you with the code and set you up for the rest of the upcoming tasks. Have fun debugging!
-
-Aside from the bug mentioned above, there are five additional major student tasks in the Memory Management chatbot project, which are:
-
 ## Credits
 
 The starter code for this project is from the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213): Memory Management. 
